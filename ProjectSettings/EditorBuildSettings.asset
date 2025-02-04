@@ -6,15 +6,15 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 0
-    path: Assets/Scenes/SampleScene.unity
+    path: Assets/Lisa/Scenes/SampleScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
-    path: Assets/Scenes/Main.unity
+    path: Assets/Lisa/Scenes/Main.unity
     guid: 543df609a1d39a04caf11057a1f4ab97
   - enabled: 1
-    path: Assets/Scenes/Tutorial.unity
+    path: Assets/Lisa/Scenes/Tutorial.unity
     guid: 9529f364a99a04347a3e8e33f4ef5761
   - enabled: 1
-    path: Assets/Scenes/Scene0.unity
+    path: Assets/Lisa/Scenes/Scene0.unity
     guid: 3e3553e4be30c0b4a851e0ec1b606dcd
   m_configObjects: {}

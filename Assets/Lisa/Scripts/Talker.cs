@@ -6,14 +6,24 @@ public class Talker : MonoBehaviour
 {
     bool done;
     Animator animator;
-    string s = "Dude just Go down";
+    
+    [SerializeField]
+    string s;
     
     TextMesh text;
 
-    private void Awake()
+    private void OnEnable()
     {
-        animator = GetComponent<Animator>();
-        text = GetComponentInChildren<TextMesh>();
+        if (text == null)
+        {
+            animator = GetComponent<Animator>();
+            text = GetComponentInChildren<TextMesh>();
+        }
+
+        if (animator == null)
+        {
+            AnimDone();
+        }
     }
 
     public void AnimDone()
@@ -39,6 +49,15 @@ public class Talker : MonoBehaviour
         }
 
         done = true;
-        animator.SetTrigger("close");
+
+        if (animator != null)
+        {
+            animator.SetTrigger("close");
+        }
+        else
+        {
+            yield return new WaitForSeconds(2);
+            AnimDone();
+        }
     }
 }

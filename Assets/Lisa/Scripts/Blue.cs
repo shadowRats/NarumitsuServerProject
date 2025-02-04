@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Blue : MonoBehaviour
 {
-    GameObject on;
+    Collider2D on;
 
     Animator animator;
     SpriteRenderer sr;
@@ -27,15 +27,38 @@ public class Blue : MonoBehaviour
     void Update()
     {
 
-        if (Input.GetKeyDown(KeyCode.Z) && on != null)
+        if (on != null)
         {
-            on.transform.GetChild(0).gameObject.SetActive(true);
+            if (Input.GetKeyDown(Controlls.confirm))
+            {
+                on.transform.GetChild(0).gameObject.SetActive(true);
+            }
+
+            if (on.CompareTag("Overlapper"))
+            {
+                
+
+                if (transform.position.y - transform.lossyScale.y / 2 < on.transform.position.y - on.bounds.size.y / 2)
+                {
+                    if (transform.position.z >= on.transform.position.z)
+                    {
+                        transform.position -= Vector3.forward * 0.1f;
+                    }
+                }
+                else
+                {
+                    if (transform.position.z <= on.transform.position.z)
+                    {
+                        transform.position += Vector3.forward * 0.1f;
+                    }
+                }
+            }
         }
 
 
-        if (Input.GetKey(KeyCode.DownArrow) && !Input.GetKey(KeyCode.UpArrow))
+        if (Input.GetKey(Controlls.down) && !Input.GetKey(Controlls.up))
         {
-            last = KeyCode.DownArrow;
+            last = Controlls.down;
 
             if (!animator.enabled)
             {
@@ -45,9 +68,9 @@ public class Blue : MonoBehaviour
             animator.SetInteger("direction", 0);
             transform.position += speed * Time.deltaTime * Vector3.down;
         }
-        if (Input.GetKey(KeyCode.UpArrow) && !Input.GetKey(KeyCode.DownArrow))
+        if (Input.GetKey(Controlls.up) && !Input.GetKey(Controlls.down))
         {
-            last = KeyCode.UpArrow;
+            last = Controlls.up;
 
             if (!animator.enabled)
             {
@@ -57,9 +80,9 @@ public class Blue : MonoBehaviour
             animator.SetInteger("direction", 1);
             transform.position += speed * Time.deltaTime * Vector3.up;
         }
-        if (Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.RightArrow))
+        if (Input.GetKey(Controlls.left) && !Input.GetKey(Controlls.right))
         {
-            last = KeyCode.LeftArrow;
+            last = Controlls.left;
 
             if (!animator.enabled)
             {
@@ -73,9 +96,9 @@ public class Blue : MonoBehaviour
             animator.SetInteger("direction", 2);
             transform.position += speed * Time.deltaTime * Vector3.left;
         }
-        if (Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.LeftArrow))
+        if (Input.GetKey(Controlls.right) && !Input.GetKey(Controlls.left))
         {
-            last = KeyCode.RightArrow;
+            last = Controlls.right;
 
             if (!animator.enabled)
             {
@@ -91,19 +114,19 @@ public class Blue : MonoBehaviour
         }
 
 
-        if (animator.enabled && !Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.UpArrow) && !Input.GetKey(KeyCode.DownArrow))
+        if (animator.enabled && !Input.GetKey(Controlls.right) && !Input.GetKey(Controlls.left) && !Input.GetKey(Controlls.up) && !Input.GetKey(Controlls.down))
         {
             animator.enabled = false;
 
-            if (last == KeyCode.RightArrow || last == KeyCode.LeftArrow)
+            if (last == Controlls.right || last == Controlls.left)
             {
                 sr.sprite = idles[2];
             }
-            if (last == KeyCode.UpArrow)
+            if (last == Controlls.up)
             {
                 sr.sprite = idles[1];
             }
-            if (last == KeyCode.DownArrow)
+            if (last == Controlls.down)
             {
                 sr.sprite = idles[0];
             }
@@ -113,7 +136,7 @@ public class Blue : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        on = collision.gameObject;
+        on = collision;
     }
 
     private void OnTriggerExit2D(Collider2D collision)

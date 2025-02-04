@@ -14,6 +14,13 @@ public class Saver : MonoBehaviour
 
     void Start()
     {
+        if (!PlayerPrefs.HasKey("settings"))
+        {
+            PlayerPrefs.SetString("settings", "055");
+        }
+
+        Controlls.ChangeControlls(PlayerPrefs.GetString("settings")[0] - 48);
+        
         Cursor.lockState = CursorLockMode.Locked;
 
         files = filesParent.GetComponentsInChildren<Text>();

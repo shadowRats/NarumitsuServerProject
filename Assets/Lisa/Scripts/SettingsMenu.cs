@@ -19,17 +19,28 @@ public class SettingsMenu : Menu
 
     readonly int[] columns = { 1, 3, 10, 10 };
 
+    string settings;
+
     protected override void Start()
     {
         base.Start();
 
         rows = GetComponentsInChildren<Image>();
         chosen = new Sprite[][] { row1, row2, row3 };
+
+
+        settings = PlayerPrefs.GetString("settings");
+
+        for (int i = 1; i < 4; i++)
+        {
+            rows[i].sprite = chosen[i - 1][settings[i - 1] - 48];
+        }
+
     }
 
     protected override void Update()
     {
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        if (Input.GetKeyDown(Controlls.left))
         {
             column--;
             if (column < 0)
@@ -39,7 +50,7 @@ public class SettingsMenu : Menu
 
             image.sprite = indicators[GetCurrent()];
         }
-        if (Input.GetKeyDown(KeyCode.RightArrow))
+        if (Input.GetKeyDown(Controlls.right))
         {
             column++;
             if (column >= columns[row])
@@ -50,7 +61,7 @@ public class SettingsMenu : Menu
             image.sprite = indicators[GetCurrent()];
         }
 
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        if (Input.GetKeyDown(Controlls.up))
         {
             int prevRow = row;
 
@@ -64,7 +75,7 @@ public class SettingsMenu : Menu
             NewRow(prevRow);
         }
 
-        if (Input.GetKeyDown(KeyCode.DownArrow))
+        if (Input.GetKeyDown(Controlls.down))
         {
             int prevRow = row;
 
@@ -77,11 +88,28 @@ public class SettingsMenu : Menu
             NewRow(prevRow);
         }
 
-        if (Input.GetKeyDown(KeyCode.Z))
+        if (Input.GetKeyDown(Controlls.confirm))
         {
             if (row > 0)
             {
                 rows[row].sprite = chosen[row - 1][column];
+
+                char[] c = settings.ToCharArray();
+
+                c[row - 1] = char.Parse(column + "");
+
+                settings = "";
+                foreach(char cc in c)
+                {
+                    settings += cc;
+                }
+
+                PlayerPrefs.SetString("settings", settings);
+
+                if (row == 1)
+                {
+                    Controlls.ChangeControlls(settings[0] - 48);
+                }
             }
             else
             {

@@ -19,7 +19,7 @@ public class Menu : MonoBehaviour
 
     protected virtual void Update()
     {
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        if (Input.GetKeyDown(Controlls.up))
         {
             current--;
             if (current < 0)
@@ -29,7 +29,7 @@ public class Menu : MonoBehaviour
 
             image.sprite = indicators[current];
         }
-        if (Input.GetKeyDown(KeyCode.DownArrow))
+        if (Input.GetKeyDown(Controlls.down))
         {
             current++;
             if (current >= indicators.Length)
@@ -39,7 +39,7 @@ public class Menu : MonoBehaviour
 
             image.sprite = indicators[current];
         }
-        if (Input.GetKeyDown(KeyCode.Z))
+        if (Input.GetKeyDown(Controlls.confirm))
         {
             Interact(current);
         }

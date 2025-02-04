@@ -36,7 +36,7 @@ public class Tutorial : MonoBehaviour
 
         if (step == 0)
         {
-            if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.UpArrow))
+            if (Input.GetKeyDown(Controlls.left) || Input.GetKeyDown(Controlls.right) || Input.GetKeyDown(Controlls.down) || Input.GetKeyDown(Controlls.up))
             {
                 Moved();
             }
@@ -72,7 +72,7 @@ public class Tutorial : MonoBehaviour
             enabled = true;
             transform.GetChild(0).gameObject.SetActive(true);
 
-            if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.UpArrow))
+            if (Input.GetKey(Controlls.right) || Input.GetKey(Controlls.left) || Input.GetKey(Controlls.down) || Input.GetKey(Controlls.up))
             {
                 Moved();
             }
