@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Blue : MonoBehaviour
 {
-    Collider2D on;
+
+    readonly List<Collider2D> on = new();
 
     Animator animator;
     SpriteRenderer sr;
@@ -27,27 +28,31 @@ public class Blue : MonoBehaviour
     void Update()
     {
 
-        if (on != null)
+        if (on.Count > 0)
         {
             if (Input.GetKeyDown(Controlls.confirm))
             {
-                on.transform.GetChild(0).gameObject.SetActive(true);
+                Event e = on[^1].transform.GetComponent<Event>();
+                if (e != null && !e.enabled)
+                {
+                    e.enabled = true;
+                }
             }
 
-            if (on.CompareTag("Overlapper"))
+            if (on[^1].CompareTag("Overlapper"))
             {
                 
 
-                if (transform.position.y - transform.lossyScale.y / 2 < on.transform.position.y - on.bounds.size.y / 2)
+                if (transform.position.y - transform.lossyScale.y / 2 < on[^1].transform.position.y - on[^1].bounds.size.y / 2)
                 {
-                    if (transform.position.z >= on.transform.position.z)
+                    if (transform.position.z >= on[^1].transform.position.z)
                     {
                         transform.position -= Vector3.forward * 0.1f;
                     }
                 }
                 else
                 {
-                    if (transform.position.z <= on.transform.position.z)
+                    if (transform.position.z <= on[^1].transform.position.z)
                     {
                         transform.position += Vector3.forward * 0.1f;
                     }
@@ -136,15 +141,12 @@ public class Blue : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        on = collision;
+        on.Add(collision);
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (on == collision.gameObject)
-        {
-            on = null;
-        }
+        on.Remove(collision);
     }
 
     private void OnDisable()

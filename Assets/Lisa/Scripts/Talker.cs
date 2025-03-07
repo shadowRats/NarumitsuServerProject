@@ -1,63 +1,36 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class Talker : MonoBehaviour
+public class Talker : Event
 {
-    bool done;
-    Animator animator;
-    
-    [SerializeField]
-    string s;
-    
-    TextMesh text;
-
-    private void OnEnable()
+    protected Text text;
+    readonly float textSpeed = 0.07f;
+    protected override void Awake()
     {
+        base.Awake();
+
         if (text == null)
         {
-            animator = GetComponent<Animator>();
-            text = GetComponentInChildren<TextMesh>();
-        }
-
-        if (animator == null)
-        {
-            AnimDone();
+            text = transform.GetChild(0).GetChild(0).GetComponent<Text>();
         }
     }
 
-    public void AnimDone()
+    protected IEnumerator Talk(string s, int id)
     {
-        if (done)
-        {
-            done = false;
-            text.text = "";
-            gameObject.SetActive(false);
-        }
-        else
-        {
-            StartCoroutine(Talk());
-        }
-    }
 
-    IEnumerator Talk()
-    {
         for (int i = 0; i < s.Length; i++)
         {
             text.text += s[i];
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(textSpeed);
         }
 
-        done = true;
+        TalkDone(id);
+    }
 
-        if (animator != null)
-        {
-            animator.SetTrigger("close");
-        }
-        else
-        {
-            yield return new WaitForSeconds(2);
-            AnimDone();
-        }
+    protected override void Waited(int id)
+    {
+        text.text = "";
     }
 }
