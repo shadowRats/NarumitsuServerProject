@@ -21,20 +21,25 @@ public class Tutorial : MonoBehaviour
 
     readonly float camSpeed = 3, textSpeed = 0.5f;
 
-    int step;
+    int step = -1;
 
     void Start()
     {
         animator = GetComponent<Animator>();
         image = GetComponent<Image>();
-        enabled = false;
         empty = image.sprite;
     }
 
     void Update()
     {
-
-        if (step == 0)
+        if (step == -1)
+        {
+            if (Input.GetKeyDown(KeyCode.LeftShift))
+            {
+                AnimDone();
+            }
+        }
+        else if (step == 0)
         {
             if (Input.GetKeyDown(Controlls.left) || Input.GetKeyDown(Controlls.right) || Input.GetKeyDown(Controlls.down) || Input.GetKeyDown(Controlls.up))
             {
@@ -63,19 +68,15 @@ public class Tutorial : MonoBehaviour
 
     }
 
-    public void AnimDone(int anim)
+    public void AnimDone()
     {
+        step++;
         animator.enabled = false;
+        transform.GetChild(0).gameObject.SetActive(true);
 
-        if (anim == 1)
+        if (Input.GetKey(Controlls.right) || Input.GetKey(Controlls.left) || Input.GetKey(Controlls.down) || Input.GetKey(Controlls.up))
         {
-            enabled = true;
-            transform.GetChild(0).gameObject.SetActive(true);
-
-            if (Input.GetKey(Controlls.right) || Input.GetKey(Controlls.left) || Input.GetKey(Controlls.down) || Input.GetKey(Controlls.up))
-            {
-                Moved();
-            }
+            Moved();
         }
     }
     
@@ -101,6 +102,7 @@ public class Tutorial : MonoBehaviour
 
         cam.position = blue.transform.position + Vector3.back * 10;
         cam.parent = blue.transform;
+        blue.enabled = true;
 
         StartCoroutine(ShowTut2());
     }
@@ -117,7 +119,6 @@ public class Tutorial : MonoBehaviour
 
         image.color = Color.white;
         transform.GetChild(3).gameObject.SetActive(true);
-        blue.enabled = true;
         step++;
 
     }

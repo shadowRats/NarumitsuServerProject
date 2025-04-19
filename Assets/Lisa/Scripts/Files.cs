@@ -11,7 +11,7 @@ public class Files : Menu
     {
         if (current > 0)
         {
-            FindObjectOfType<Saver>().Load(current);
+            FindObjectOfType<Saver>().LoadFile(current);
         }
         else
         {

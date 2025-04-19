@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class SettingsMenu : Menu
 {
+    Saver saver;
+
     [SerializeField]
     GameObject mainMenu;
 
@@ -24,6 +26,8 @@ public class SettingsMenu : Menu
     protected override void Start()
     {
         base.Start();
+
+        saver = FindObjectOfType<Saver>();
 
         rows = GetComponentsInChildren<Image>();
         chosen = new Sprite[][] { row1, row2, row3 };
@@ -110,6 +114,15 @@ public class SettingsMenu : Menu
                 {
                     Controlls.ChangeControlls(settings[0] - 48);
                 }
+                else if (row == 2)
+                {
+                    saver.UpdateSoundVolume();
+                }
+                else
+                {
+                    saver.UpdateMusicVolume();
+                }
+
             }
             else
             {

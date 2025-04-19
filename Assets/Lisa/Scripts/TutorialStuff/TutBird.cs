@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class TutBird : Talker
 {
@@ -30,7 +29,7 @@ public class TutBird : Talker
         }
         else if (id == 3)
         {
-            SceneManager.LoadScene("Main");
+            FindObjectOfType<Saver>().LoadScene("Main");
         }
     }
 

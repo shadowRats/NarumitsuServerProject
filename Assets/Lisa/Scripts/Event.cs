@@ -15,18 +15,9 @@ public class Event : MonoBehaviour
 
     protected virtual void Awake()
     {
-        if (animator == null)
-        {
-            animator = GetComponent<Animator>();
-        }
-        if (sr == null)
-        {
-            sr = GetComponent<SpriteRenderer>();
-        }
-        if (normal == null)
-        {
-            normal = sr.sprite;
-        }
+        animator = GetComponent<Animator>();
+        sr = GetComponent<SpriteRenderer>();
+        normal = sr.sprite;
     }
 
     protected virtual void OnEnable()
@@ -34,10 +25,6 @@ public class Event : MonoBehaviour
 
     }
 
-    protected virtual void TalkDone(int id)
-    {
-        StartCoroutine(Wait(2, id));
-    }
 
     public virtual void AnimDone()
     {

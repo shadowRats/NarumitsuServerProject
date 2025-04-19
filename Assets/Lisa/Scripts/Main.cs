@@ -16,7 +16,7 @@ public class Main : Menu
         }
         else if (current == 2)
         {
-            SceneManager.LoadScene("Tutorial");
+            FindObjectOfType<Saver>().LoadScene("Tutorial");
         }
         else if (current == 1)
         {
